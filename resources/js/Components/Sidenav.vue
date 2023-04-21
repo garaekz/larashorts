@@ -102,7 +102,7 @@
                         </svg>
                         <span class="flex-1 ml-3 whitespace-nowrap">Messages</span>
                         <span
-                            class="inline-flex justify-center items-center w-5 h-5 text-xs font-semibold rounded-full text-primary-800 bg-primary-100 dark:bg-primary-200 dark:text-primary-800">
+                            class="inline-flex justify-center items-center w-5 h-5 text-xs font-semibold rounded-full text-cyan-800 bg-cyan-100 dark:bg-cyan-200 dark:text-cyan-800">
                             6
                         </span>
                     </a>
@@ -146,6 +146,9 @@
                 </li>
             </ul>
             <ul class="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
+                <div class="px-3 mb-4 text-sm font-semibold text-gray-600 dark:text-gray-500">
+                    Admin
+                </div>
                 <li>
                     <a href="#"
                         class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
