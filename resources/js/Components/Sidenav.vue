@@ -1,11 +1,17 @@
-<script>
+<script setup>
+
+const props = defineProps({
+    sidenavOpen: Boolean,
+});
+
 </script>
 <template>
     <aside id="default-sidebar"
-        class="fixed pt-16 top-0 left-0 z-30 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        :class="{'translate-x-0 ease-out': sidenavOpen, '-translate-x-full ease-in': !sidenavOpen}"
+        class="sm:flex fixed pt-16 top-0 left-0 z-30 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidenav">
         <div
-            class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            class="overflow-y-auto py-5 px-3 w-full h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
             <ul class="space-y-2">
                 <li>
                     <a href="#"
@@ -145,7 +151,9 @@
                     </ul>
                 </li>
             </ul>
-            <ul class="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
+            <ul
+                v-if="$page.props.auth.roles.includes('admin')"
+                class="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
                 <div class="px-3 mb-4 text-sm font-semibold text-gray-600 dark:text-gray-500">
                     Admin
                 </div>

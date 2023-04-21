@@ -27,6 +27,12 @@ const switchToTeam = (team) => {
 const logout = () => {
     router.post(route('logout'));
 };
+
+const showSidenav = ref(false);
+
+const handleMenuToggle = () => {
+    showSidenav.value = !showSidenav.value;
+};
 </script>
 
 <template>
@@ -35,8 +41,8 @@ const logout = () => {
 
         <Banner />
 
-        <Navbar />
-        <Sidenav />
+        <Navbar :sidenav-open="showSidenav" @update:sidenavOpen="handleMenuToggle" />
+        <Sidenav :sidenav-open="showSidenav" />
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
                 <!-- Primary Navigation Menu -->
@@ -287,8 +293,10 @@ const logout = () => {
             </header> -->
 
             <!-- Page Content -->
-            <main class="lg:ml-64">
-                <slot />
+            <main class="sm:ml-64">
+                <div class="lg:p-4">
+                    <slot />
+                </div>
             </main>
         </div>
     </div>
