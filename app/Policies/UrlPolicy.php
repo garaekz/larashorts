@@ -13,7 +13,7 @@ class UrlPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -21,7 +21,7 @@ class UrlPolicy
      */
     public function view(User $user, Url $url): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -29,7 +29,7 @@ class UrlPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -37,7 +37,12 @@ class UrlPolicy
      */
     public function update(User $user, Url $url): bool
     {
-        //
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+        // By default users can only update their own URLs.
+        return $user->id == $url->user_id;
     }
 
     /**
@@ -45,7 +50,12 @@ class UrlPolicy
      */
     public function delete(User $user, Url $url): bool
     {
-        //
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+        // By default users can only update their own URLs.
+        return $user->id == $url->user_id;
     }
 
     /**
@@ -53,7 +63,7 @@ class UrlPolicy
      */
     public function restore(User $user, Url $url): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -61,6 +71,6 @@ class UrlPolicy
      */
     public function forceDelete(User $user, Url $url): bool
     {
-        //
+        return false;
     }
 }

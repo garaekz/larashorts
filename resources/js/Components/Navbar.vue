@@ -41,13 +41,14 @@ const logout = () => {
                                 clip-rule="evenodd"></path>
                         </svg>
                     </button>
-                    <a href="https://flowbite-admin-dashboard.vercel.app/" class="flex ml-2 md:mr-24">
+                    <Link
+                      :href="route('dashboard')" class="flex ml-2 md:mr-24">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Laravel.svg" class="h-8 mr-3"
-                            alt="FlowBite Logo">
+                            alt="Logo">
                         <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                             Larashorts
                         </span>
-                    </a>
+                    </Link>
                 </div>
                 <div class="flex items-center">
                     <div class="hidden mr-3 -mb-1 sm:block">
@@ -65,7 +66,7 @@ const logout = () => {
                         </svg>
                     </button>
 
-                    <div class="z-20 z-50 hidden max-w-sm my-4 overflow-hidden text-base list-none bg-white divide-y divide-gray-100 rounded shadow-lg dark:divide-gray-600 dark:bg-gray-700"
+                    <div class="z-20 hidden max-w-sm my-4 overflow-hidden text-base list-none bg-white divide-y divide-gray-100 rounded shadow-lg dark:divide-gray-600 dark:bg-gray-700"
                         id="notification-dropdown" data-popper-placement="bottom"
                         style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(1739px, 65px);">
                         <div

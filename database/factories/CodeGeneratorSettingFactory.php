@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Url>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CodeGeneratorSetting>
  */
-class UrlFactory extends Factory
+class CodeGeneratorSettingFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,7 @@ class UrlFactory extends Factory
     public function definition(): array
     {
         return [
-            'original_url' => $this->faker->url,
-            'code' => $this->faker->unique()->randomNumber(6),
-            'user_id' => 1,
+            //
         ];
     }
 }

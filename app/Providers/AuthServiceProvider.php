@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Models\Url;
+use App\Policies\UrlPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Url::class => UrlPolicy::class,
     ];
 
     /**
@@ -21,6 +25,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // We don't yet have a Super Admin role, so we'll just use the admin role for now.
+        // Gate::before(function ($user, $ability) {
+        //     return $user->hasRole('admin') ? true : null;
+        // });
     }
 }

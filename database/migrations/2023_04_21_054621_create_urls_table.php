@@ -16,7 +16,10 @@ return new class extends Migration
             $table->id();
             $table->string('original_url');
             $table->string('code')->unique()->index();
+            $table->string('base_url')->nullable();
             $table->integer('visits')->default(0);
+            $table->boolean('is_active')->default(true);
+            $table->boolean('api_generated')->default(true);
             $table->timestamp('expires_at')->nullable();
             $table->foreignIdFor(User::class)->nullable()->constrained()->onDelete('cascade');
             $table->softDeletes();

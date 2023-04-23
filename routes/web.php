@@ -33,8 +33,10 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::apiResource('urls', UrlController::class);
 });
 
 Route::group(['middleware' => ['auth:sanctum','role:admin']], function () {
-    Route::apiResource('urls', UrlController::class);
+    // Routes for admin only
 });
