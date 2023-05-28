@@ -5,8 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,15 +14,15 @@ return new class extends Migration
         Schema::create('urls', function (Blueprint $table) {
             $table->id();
             $table->string('original_url');
-            $table->string('code')->unique()->index();
-            $table->string('base_url')->nullable();
+            $table->string('code');
             $table->integer('visits')->default(0);
             $table->boolean('is_active')->default(true);
-            $table->boolean('api_generated')->default(true);
             $table->timestamp('expires_at')->nullable();
-            $table->foreignIdFor(User::class)->nullable()->constrained()->onDelete('cascade');
+            $table->morphs('urlable');
             $table->softDeletes();
             $table->timestamps();
+
+            $table->unique(['code', 'urlable_type', 'urlable_id']);
         });
     }
 

@@ -4,12 +4,14 @@ namespace App\Repositories;
 
 use App\Contracts\UrlRepositoryInterface;
 use App\Models\Url;
+use App\Models\User;
 
 class UrlRepository implements UrlRepositoryInterface
 {
     public function __construct(
         private Url $model,
-    ) {}
+    ) {
+    }
 
     public function all()
     {
@@ -21,9 +23,9 @@ class UrlRepository implements UrlRepositoryInterface
         return $this->model->paginate($perPage);
     }
 
-    public function create(array $data)
+    public function create($urlable, array $data)
     {
-        return $this->model->create($data);
+        return $urlable->urls()->create($data);
     }
 
     public function update(array $data, $model)
@@ -57,5 +59,23 @@ class UrlRepository implements UrlRepositoryInterface
         }
 
         return $this->model->with($withList)->where($whereList)->first($columns);
+    }
+
+    public function findOneByCodeForUsers(string $code)
+    {
+        return $this->model->where([
+            ['code', $code],
+            ['urlable_type', User::class],
+        ])->first();
+    }
+
+    public function findOneByUrlableAndOriginalUrl($urlable, string $originalUrl)
+    {
+        return $urlable->urls()->where('original_url', $originalUrl)->first();
+    }
+
+    public function findByUrlablePaginated($urlable, $perPage = 10)
+    {
+        return $urlable->urls()->paginate($perPage);
     }
 }

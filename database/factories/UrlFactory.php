@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Application;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,10 +18,21 @@ class UrlFactory extends Factory
      */
     public function definition(): array
     {
+        $urlable = $this->urlable();
+
         return [
             'original_url' => $this->faker->url,
             'code' => $this->faker->unique()->randomNumber(6),
-            'user_id' => 1,
+            'urlable_type' => $urlable,
+            'urlable_id' => $urlable::factory(),
         ];
+    }
+
+    public function urlable()
+    {
+        return $this->faker->randomElement([
+            User::class,
+            Application::class,
+        ]);
     }
 }

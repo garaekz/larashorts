@@ -8,17 +8,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Url extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'url',
         'code',
-        'user_id',
-        'original_url'
+        'original_url',
+        'urlable_type',
+        'urlable_id',
     ];
 
-    public function user()
+    public function urlable()
     {
-        return $this->belongsTo(User::class);
+        return $this->morphTo();
     }
 }

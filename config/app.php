@@ -188,4 +188,16 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Configuration
+    |--------------------------------------------------------------------------
+    |
+    | This are custom configuration options for the application.
+    |
+    */
+    'code_generation' => [
+        'max_length' => env('MAX_ALLOWED_CODE_LENGTH', 10),
+        'max_attempts' => env('MAX_CODE_GENERATION_ATTEMPTS', 10),
+    ],
 ];

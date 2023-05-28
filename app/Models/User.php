@@ -29,6 +29,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'min_code_length',
     ];
 
     /**
@@ -60,4 +61,24 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Get all of the urls for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
+    /**
+     * Get all of the urls for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function urls()
+    {
+        return $this->morphMany(Url::class, 'urlable');
+    }
 }

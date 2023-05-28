@@ -6,13 +6,15 @@ use App\Models\Url;
 use App\Http\Requests\StoreUrlRequest;
 use App\Http\Requests\UpdateUrlRequest;
 use App\Services\UrlService;
+use Exception;
 use Inertia\Inertia;
 
 class UrlController extends Controller
 {
     public function __construct(
         private UrlService $service,
-    ){}
+    ) {
+    }
 
     /**
      * Display a listing of the resource.
@@ -21,7 +23,7 @@ class UrlController extends Controller
     {
         try {
             return Inertia::render('Urls/Index', [
-                'urls' => $this->service->getPaginated(15)
+                'urls' => $this->service->getPaginatedByUrlable(auth()->user(), 15)
             ]);
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors($th->getMessage());
@@ -34,17 +36,19 @@ class UrlController extends Controller
     public function store(StoreUrlRequest $request)
     {
         try {
-            $this->service->create([
+            if ($this->service->shortExists(auth()->user(), $request->url)) {
+                throw new Exception('This url has already been shortened');
+            }
+
+            $this->service->createByUser(auth()->user(), [
                 'original_url' => $request->url,
-                'user_id' => auth()->id(),
             ]);
 
             return redirect()
-                ->route('urls.index', [], 201)
-                ->withSuccess('Url shortened successfully');
+                ->route('urls.index')
+                ->withSuccess('Url shortened successfully.');
         } catch (\Throwable $th) {
-            dd($th);
-            return redirect()->back()->withErrors($th->getMessage())->withStatus(500);
+            return redirect()->back()->withErrors(['url' => $th->getMessage()]);
         }
     }
 
@@ -80,7 +84,6 @@ class UrlController extends Controller
                 ->route('urls.index')
                 ->withSuccess('Url updated successfully');
         } catch (\Throwable $th) {
-            dd($th);
             return redirect()->back(500)->withErrors($th->getMessage());
         }
     }
@@ -98,7 +101,6 @@ class UrlController extends Controller
                 ->route('urls.index')
                 ->withSuccess('Url deleted successfully');
         } catch (\Throwable $th) {
-            dd($th);
             return redirect()->back(500)->withErrors($th->getMessage());
         }
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\UrlController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -25,16 +26,20 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
+Route::group([
+    'middleware' => [
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+    ],
+    'prefix' => 'dashboard',
+], function () {
+    Route::get('/', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
     Route::apiResource('urls', UrlController::class);
+    Route::apiResource('apikeys', ApplicationController::class);
 });
 
 Route::group(['middleware' => ['auth:sanctum','role:admin']], function () {

@@ -42,7 +42,7 @@ class UrlPolicy
         }
 
         // By default users can only update their own URLs.
-        return $user->id == $url->user_id;
+        return $user->id == $url->urlable_id && $url->urlable_type === User::class;
     }
 
     /**
@@ -55,7 +55,7 @@ class UrlPolicy
         }
 
         // By default users can only update their own URLs.
-        return $user->id == $url->user_id;
+        return $user->id == $url->urlable_id && $url->urlable_type === User::class;
     }
 
     /**

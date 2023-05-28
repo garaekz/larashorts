@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\CodeGeneratorSetting;
+use App\Models\Application;
 use App\Models\Url;
+use App\Models\User;
 use App\Repositories\UrlRepository;
 use Exception;
 use Illuminate\Support\Facades\Cache;
@@ -12,17 +13,18 @@ class UrlService
 {
     public function __construct(
         private UrlRepository $repository,
-    ) {}
-
-    public function getPaginated($perPage = 10)
-    {
-        return $this->repository->paginated($perPage);
+    ) {
     }
 
-    public function create(array $data)
+    public function getPaginatedByUrlable($perPage = 10)
     {
-        $data['code'] = $this->generateUrlCode();
-        return $this->repository->create($data);
+        return $this->repository->findByUrlablePaginated($perPage);
+    }
+
+    public function createByUser(User $user, array $data): Url
+    {
+        $data['code'] = $this->generateUrlCode($user);
+        return $this->repository->create($user, $data);
     }
 
     public function update(Url $url, array $data)
@@ -35,32 +37,48 @@ class UrlService
         return $this->repository->delete($url);
     }
 
-    public function generateUrlCode($tries = 0): string
+    public function shortExists($urlable, string $originalUrl): bool
     {
-        $config = Cache::rememberForever('code_generator_configuration', function () {
-            // Should refactor this to add the correct repository
-            return CodeGeneratorSetting::firstOrFail();
-        });
-
-        for ($i = 0; $i < $config->max_attempts; $i++) {
-            $max_length = $config->max_length;
-
-            $code = $this->generateUniqueCode($max_length);
-
-            if (!$this->repository->findOneBy(['code' => $code])) {
-                return $code;
-            }
-        }
-
-        $config->update(['max_length' => $config->max_length + 1]);
-        Cache::put('code_generator_configuration', $config);
-
-        if ($tries < $config->max_retries) {
-            return $this->generateUrlCode($tries + 1);
-        }
-
-        throw new Exception('Unable to generate unique code.');
+        return $this->repository->findOneByUrlableAndOriginalUrl($urlable, $originalUrl) ? true : false;
     }
+
+    public function fetchByCode(string $code, $base_url)
+    {
+        return $this->repository->findOneBy(['code' => $code, 'base_url' => $base_url]);
+    }
+
+    public function generateUrlCode(User|Application $urlable): string
+    {
+        $maxCodeLength = $urlable->min_code_length;
+        $maxAllowedCodeLength = config('app.code_generation.max_length');
+        $maxAttempts = config('app.code_generation.max_attempts');
+
+        for ($attempt = 0; $attempt < $maxAttempts; $attempt++) {
+            $code = $this->generateUniqueCode($maxCodeLength);
+
+            if ($urlable instanceof User) {
+                if (!$this->repository->findOneByCodeForUsers($code)) {
+                    return $code;
+                }
+            } elseif ($urlable instanceof Application) {
+                if (!$this->repository->findOneByUrlableAndOriginalUrl($code, $urlable)) {
+                    return $code;
+                }
+            }
+
+            $maxCodeLength++;
+        }
+
+        $urlable->min_code_length = $maxCodeLength;
+        $urlable->save();
+
+        if ($maxCodeLength > $maxAllowedCodeLength) {
+            throw new Exception('Unable to generate unique code.');
+        }
+
+        return $this->generateUrlCode($urlable);
+    }
+
 
     public function generateUniqueCode($length): string
     {
@@ -77,5 +95,4 @@ class UrlService
 
         return $code;
     }
-
 }
