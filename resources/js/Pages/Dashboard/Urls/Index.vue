@@ -53,8 +53,17 @@ const columns = [
   },
 ]
 
-const goToPage = (page) => {
-  router.reload({ data: page });
+const onPageChange = (query) => {
+  console.log(query);
+  router.reload({ data: query });
+};
+
+const onSearch = (query) => {
+
+  router.reload({ 
+    data: query,
+    preserveState: false,
+  });
 };
 </script>
 
@@ -71,7 +80,10 @@ const goToPage = (page) => {
       <DataTable
         :data="urls" 
         :columns="columns"
-        @table:page-change="goToPage"
+        createLabel="Acortar nueva URL"
+        @table:search="onSearch"
+        @table:page-change="onPageChange"
+        @table:creating="creatingShort = true"
         >
         <template #is_active="{ item }">
           <span
