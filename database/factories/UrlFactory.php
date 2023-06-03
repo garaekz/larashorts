@@ -22,7 +22,7 @@ class UrlFactory extends Factory
 
         return [
             'original_url' => $this->faker->url,
-            'code' => $this->faker->unique()->randomNumber(6),
+            'code' => $this->faker->unique()->word(),
             'urlable_type' => $urlable,
             'urlable_id' => $urlable::factory(),
         ];

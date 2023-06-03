@@ -22,7 +22,7 @@ class UrlController extends Controller
     public function index()
     {
         try {
-            return Inertia::render('Urls/Index', [
+            return Inertia::render('Dashboard/Urls/Index', [
                 'urls' => $this->service->getPaginatedByUrlable(auth()->user(), 15)
             ]);
         } catch (\Throwable $th) {

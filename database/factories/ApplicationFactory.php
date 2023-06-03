@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,8 @@ class ApplicationFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
+            'min_code_length' => 4,
+            'user_id' => User::factory()->create()->id,
         ];
     }
 }

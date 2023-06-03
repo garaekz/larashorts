@@ -81,7 +81,7 @@ const logout = () => {
                                         src="https://flowbite-admin-dashboard.vercel.app/images/users/bonnie-green.png"
                                         alt="Jese image">
                                     <div
-                                        class="absolute flex items-center justify-center w-5 h-5 ml-6 -mt-5 border border-white rounded-full bg-primary-700 dark:border-gray-700">
+                                        class="absolute flex items-center justify-center w-5 h-5 ml-6 -mt-5 border border-white rounded-full bg-indigo-700 dark:border-gray-700">
                                         <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -97,7 +97,7 @@ const logout = () => {
                                     <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400">New message
                                         from <span class="font-semibold text-gray-900 dark:text-white">Bonnie Green</span>:
                                         "Hey, what's up? All set for the presentation?"</div>
-                                    <div class="text-xs font-medium text-primary-700 dark:text-primary-400">a few moments
+                                    <div class="text-xs font-medium text-indigo-700 dark:text-indigo-400">a few moments
                                         ago</div>
                                 </div>
                             </a>
@@ -122,7 +122,7 @@ const logout = () => {
                                             class="font-semibold text-gray-900 dark:text-white">Jese leos</span> and <span
                                             class="font-medium text-gray-900 dark:text-white">5 others</span> started
                                         following you.</div>
-                                    <div class="text-xs font-medium text-primary-700 dark:text-primary-400">10 minutes ago
+                                    <div class="text-xs font-medium text-indigo-700 dark:text-indigo-400">10 minutes ago
                                     </div>
                                 </div>
                             </a>
@@ -148,7 +148,7 @@ const logout = () => {
                                         <span class="font-medium text-gray-900 dark:text-white">141 others</span> love your
                                         story. See it and view more stories.
                                     </div>
-                                    <div class="text-xs font-medium text-primary-700 dark:text-primary-400">44 minutes ago
+                                    <div class="text-xs font-medium text-indigo-700 dark:text-indigo-400">44 minutes ago
                                     </div>
                                 </div>
                             </a>
@@ -172,9 +172,9 @@ const logout = () => {
                                     <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400"><span
                                             class="font-semibold text-gray-900 dark:text-white">Leslie Livingston</span>
                                         mentioned you in a comment: <span
-                                            class="font-medium text-primary-700 dark:text-primary-500">@bonnie.green</span>
+                                            class="font-medium text-indigo-700 dark:text-indigo-500">@bonnie.green</span>
                                         what do you say?</div>
-                                    <div class="text-xs font-medium text-primary-700 dark:text-primary-400">1 hour ago</div>
+                                    <div class="text-xs font-medium text-indigo-700 dark:text-indigo-400">1 hour ago</div>
                                 </div>
                             </a>
                             <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600">
@@ -196,7 +196,7 @@ const logout = () => {
                                     <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400"><span
                                             class="font-semibold text-gray-900 dark:text-white">Robert Brown</span> posted a
                                         new video: Glassmorphism - learn how to implement the new design trend.</div>
-                                    <div class="text-xs font-medium text-primary-700 dark:text-primary-400">3 hours ago
+                                    <div class="text-xs font-medium text-indigo-700 dark:text-indigo-400">3 hours ago
                                     </div>
                                 </div>
                             </a>
