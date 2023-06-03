@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUrlRequest;
 use App\Http\Requests\UpdateUrlRequest;
 use App\Services\UrlService;
 use Exception;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class UrlController extends Controller
@@ -19,11 +20,11 @@ class UrlController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
             return Inertia::render('Dashboard/Urls/Index', [
-                'urls' => $this->service->getPaginatedByUrlable(auth()->user(), 15)
+                'urls' => $this->service->getPaginatedByUrlable(auth()->user(), 15, $request->search)
             ]);
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors($th->getMessage());

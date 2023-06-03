@@ -74,8 +74,15 @@ class UrlRepository implements UrlRepositoryInterface
         return $urlable->urls()->where('original_url', $originalUrl)->first();
     }
 
-    public function findByUrlablePaginated($urlable, $perPage = 10)
+    public function findByUrlablePaginated($urlable, $perPage = 10, $search = null)
     {
-        return $urlable->urls()->paginate($perPage);
+        if ($search) {
+            return $urlable->urls()->where(function ($query) use ($search) {
+                $query->where('original_url', 'like', "%{$search}%")
+                    ->orWhere('code', 'like', "%{$search}%");
+            })->orderBy('created_at', 'desc')->paginate($perPage);
+        }
+
+        return $urlable->urls()->orderBy('created_at', 'desc')->paginate($perPage);
     }
 }

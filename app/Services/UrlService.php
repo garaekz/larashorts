@@ -16,9 +16,9 @@ class UrlService
     ) {
     }
 
-    public function getPaginatedByUrlable($perPage = 10)
+    public function getPaginatedByUrlable($urlable, $perPage = 10, $search = null)
     {
-        return $this->repository->findByUrlablePaginated($perPage);
+        return $this->repository->findByUrlablePaginated($urlable, $perPage, $search);
     }
 
     public function createByUser(User $user, array $data): Url
