@@ -54,16 +54,15 @@ const columns = [
 ]
 
 const onPageChange = (query) => {
-  console.log(query);
   router.reload({ data: query });
 };
 
-const onSearch = (query) => {
-
-  router.reload({ 
-    data: query,
-    preserveState: false,
+const onSearch = (search) => {
+  router.get(route('urls.index'), { search }, {
+    preserveState: true,
+    preserveScroll: true,
   });
+  
 };
 </script>
 

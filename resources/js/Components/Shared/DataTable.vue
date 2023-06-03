@@ -51,7 +51,7 @@ const createDebounce = (fn: Function, delay: number) => {
 };
 
 const handleSearch = createDebounce((event: Event) => {
-  emit('table:search', { search: search.value });
+  emit('table:search', search.value);
 }, 500);
 
 </script>

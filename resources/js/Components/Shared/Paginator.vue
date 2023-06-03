@@ -37,18 +37,25 @@ const hasNextPage = computed(() => {
 })
 
 const visiblePages = computed(() => {
-  let pages: (number | string)[] = [1];
-  let total: number = totalPages.value;
-  let current: number = currentPage.value;
-  let range: number[] = current <= 4 ? [2, 5] : current >= total - 3 ? [total - 4, total - 1] : [current - 1, current + 1];
+  const pages: (number|string)[] = [];
+  let total = totalPages.value;
 
-  if (range[0] > 2) pages.push('...');
-  pages.push(...Array.from({ length: range[1] - range[0] + 1 }, (_, i) => i + range[0]));
-  if (range[1] < total - 1) pages.push('...');
-  pages.push(total);
+  if (total <= 7) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  } else {
+    let current = currentPage.value;
+    let range = current <= 4 ? [2, 5] : current >= total - 3 ? [total - 4, total - 1] : [current - 1, current + 1];
+
+    pages.push(1);
+    if (range[0] > 2) pages.push('...');
+    pages.push(...Array.from({ length: range[1] - range[0] + 1 }, (_, i) => i + range[0]));
+    if (range[1] < total - 1) pages.push('...');
+    pages.push(total);
+  }
 
   return pages;
 });
+
 
 
 const getStartingIndex = () => {
