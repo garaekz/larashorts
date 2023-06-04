@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 
-class Application extends Model
+class Application extends Authenticatable
 {
+    use HasApiTokens;
     use HasFactory;
 
     /**
@@ -34,5 +37,13 @@ class Application extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the API keys for the application.
+     */
+    public function apikeys()
+    {
+        return $this->hasMany(Apikey::class);
     }
 }

@@ -17,3 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group([
+    'middleware' => [
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'ability:api:read',
+    ],
+    'as' => 'api.'
+], function () {
+    Route::get('/', function (Request $request) {
+        return $request->user();
+    })->name('test');
+});

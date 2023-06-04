@@ -3,15 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
-class ApplicationController extends Controller
+class ApplicationController extends BaseController
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        try {
+            return Inertia::render('Dashboard/Applications/Index', [
+                'applications' => auth()->user()->applications()->get(),
+            ]);
+        } catch (\Exception $e) {
+            return $this->redirectOnError($e->getMessage(), 'apikeys.index');
+        }
     }
 
     /**
