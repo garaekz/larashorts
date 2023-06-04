@@ -11,14 +11,14 @@ const props = defineProps({
   errors: {},
 });
 
-const creatingShort = ref(false);
+const creating = ref(false);
 
 const form = useForm({
   url: null,
 });
 
 const closeModal = () => {
-  creatingShort.value = false;
+  creating.value = false;
   form.reset();
 };
 
@@ -77,7 +77,7 @@ const onSearch = (search) => {
     <div
       class="p-4 bg-white lg:border border-gray-200 lg:rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
       <DataTable :data="urls" :columns="columns" createLabel="Acortar nueva URL" @table:search="onSearch"
-        @table:page-change="onPageChange" @table:creating="creatingShort = true">
+        @table:page-change="onPageChange" @table:creating="creating = true">
         <template #is_active="{ item }">
           <span
             :class="{ 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300': !item.is_active, 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300': item.is_active }"
@@ -91,7 +91,7 @@ const onSearch = (search) => {
       </DataTable>
     </div>
   </AdminLayout>
-  <DialogModal :show="creatingShort" @close="closeModal">
+  <DialogModal :show="creating" @close="closeModal">
     <template #title>
       Acortar URL
     </template>
