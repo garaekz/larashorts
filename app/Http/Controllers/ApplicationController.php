@@ -13,8 +13,14 @@ class ApplicationController extends BaseController
     public function index()
     {
         try {
+            $applications = auth()->user()->applications->map(function ($application) {
+                return $application->toArray() + [
+                    'token' => $application->tokens->first(),
+                ];
+            });
+            
             return Inertia::render('Dashboard/Applications/Index', [
-                'applications' => auth()->user()->applications()->get(),
+                'applications' => $applications,
             ]);
         } catch (\Exception $e) {
             return $this->redirectOnError($e->getMessage(), 'apikeys.index');
